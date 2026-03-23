@@ -1,3 +1,4 @@
+import argparse
 import logging
 import os
 import torch
@@ -82,8 +83,12 @@ def run_main(config_path):
         )
     return best_model
 
-if __name__ == "__main__":
-    # Change this path to whichever experiment you are currently running
-    CONFIG_FILE = "./config_hub/freq_domain/super_classes/freq_protocol_1/split_s1/mod0/RF_MatID/config.yaml"
-    run_main(CONFIG_FILE)
+def main():
+    parser = argparse.ArgumentParser('Training script for RF_MatID')
+    parser.add_argument('--config', type=str, required=True, help='path to config file')
+    args = parser.parse_args()
+    run_main(args.config)
     print("Training completed. Check the log file for details.")
+
+if __name__ == "__main__":
+    main()
