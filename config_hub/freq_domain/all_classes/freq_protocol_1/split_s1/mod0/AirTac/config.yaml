@@ -1,0 +1,37 @@
+data_dir: "/root/path/to/local/data/folder"
+
+freq_range: null
+
+batch_size: 32
+freq_data_type: "dual_channel"   # Options: complex, dual_channel
+split_mode: "random_split"  # Options: cross_distance_split_mod$1,2,3$, random_split, cross_angle_split_mod$1,2,3$
+application_mode: "all_classes"  # Options: all_classes, super_classes
+
+model:
+  type: AirTacMNet1D
+  params:
+    input_channels: 2
+    seq_len: 2048
+    base_channels_mrf: 16    # Base channels of MRF encoder
+    hidden_dim_mc: 256       # MC Two-layer Fully Connected Middle Dimension
+
+training:
+  train_device: "cuda"   # or "cpu"
+  train_epoch: 60
+  criterion:
+    type: CrossEntropyLoss
+    params: {}
+  optimizer:
+    type: AdamW
+    params:
+      lr: 0.0003
+      weight_decay: 0.01
+  scheduler:
+    type: OneCycleLR
+    params:
+      max_lr: 0.001
+      steps_per_epoch: 1875
+      epochs: 60
+  val_freq: 3
+
+save_dir: "./config_hub/freq_domain/all_classes/freq_protocol_1/split_s1/mod0/AirTac"

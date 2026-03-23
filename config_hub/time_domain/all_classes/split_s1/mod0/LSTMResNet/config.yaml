@@ -1,0 +1,32 @@
+data_dir: "/root/path/to/local/data/folder"
+
+
+batch_size: 32
+split_mode: "random_split"  # Options: cross_distance_split_mod$1,2,3$, random_split, cross_angle_split_mod$1,2,3$
+
+model:
+  type: LSTMResNetDualChannel
+  params:
+    input_dim: 1
+    hidden_dim: 128
+    num_layers: 2
+
+training:
+  train_device: "cuda"   # or "cpu"
+  train_epoch: 60
+  criterion:
+    type: CrossEntropyLoss
+    params: {}
+  optimizer:
+    type: AdamW
+    params:
+      lr: 0.001
+      weight_decay: 0.01
+  scheduler:
+    type: StepLR
+    params:
+      step_size: 20
+      gamma: 0.3
+  val_freq: 3
+
+save_dir: "./config_hub/time_domain/all_classes/split_s1/mod0/LSTMResNet"

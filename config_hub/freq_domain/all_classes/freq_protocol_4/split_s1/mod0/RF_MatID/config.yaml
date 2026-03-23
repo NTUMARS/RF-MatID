@@ -1,0 +1,40 @@
+data_dir: "/root/path/to/local/data/folder"
+
+freq_range:
+  - [5.725, 5.85]
+  - [23.12, 23.6]
+  - [24.0, 36.0]
+  - [37.0, 42.5]
+
+batch_size: 32
+freq_data_type: "three_channel"   # Options: complex, dual_channel, three_channel
+split_mode: "random_split"  # Options: cross_distance_split_mod$1,2,3$, random_split, cross_angle_split_mod$1,2,3$
+application_mode: "all_classes"  # Options: all_classes, super_classes
+
+model:
+  type: RF_MatID
+  params:
+    d_model: 128
+    drop_rate: 0.2
+
+training:
+  train_device: "cuda"   # or "cpu"
+  train_epoch: 60
+  criterion:
+    type: CrossEntropyLoss
+    params: {}
+  optimizer:
+    type: AdamW
+    params:
+      lr: 0.0001
+      weight_decay: 0.001
+
+  scheduler:
+    type: OneCycleLR
+    params:
+      max_lr: 0.001
+      steps_per_epoch: 1875
+      epochs: 60
+  val_freq: 2
+
+save_dir: "./config_hub/freq_domain/all_classes/freq_protocol_4/split_s1/mod0/RF_MatID"
